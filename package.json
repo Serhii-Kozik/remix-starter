@@ -10,7 +10,9 @@
     "start": "remix-serve ./build/server/index.js",
     "format": "prettier --write .",
     "typecheck": "tsc",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "husky"
   },
   "dependencies": {
     "@remix-run/node": "^2.8.1",
@@ -40,6 +42,9 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "happy-dom": "^14.7.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "msw": "^2.2.13",
     "postcss": "^8.4.38",
     "prettier": "3.2.5",
     "tailwindcss": "^3.4.3",
