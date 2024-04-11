@@ -9,6 +9,12 @@ import { createInstance } from "i18next";
 import i18nServer from "./modules/i18n.server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import * as i18n from "./config/i18n";
+import { server } from "../mocks/node";
+
+if (process.env.NODE_ENV === "development") {
+  console.log("===>>> Starting mock server...");
+  server.listen();
+}
 
 const ABORT_DELAY = 5_000;
 

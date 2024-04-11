@@ -16,17 +16,20 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const t = await i18nServer.getFixedT(request);
-  return json({ description: t("description") });
+  const res = await fetch("https://be-api.dev/test");
+  const text = await res.text();
+  return json({ description: t("description"), res: text });
 }
 
 export default function Index() {
   const { t } = useTranslation();
-  const { description } = useLoaderData<typeof loader>();
+  const { description, res } = useLoaderData<typeof loader>();
 
   return (
     <div>
       <h1 className="text-3xl font-bold ">{t("intro")}</h1>
       <p>{description}</p>
+      <p>{`Server responds with ${res}`}</p>
     </div>
   );
 }
