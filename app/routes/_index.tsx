@@ -1,4 +1,11 @@
-import type { MetaFunction } from "@remix-run/node";
+import {
+  json,
+  type MetaFunction,
+  type LoaderFunctionArgs,
+} from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
+import i18nServer from "~/modules/i18n.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,35 +14,19 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const t = await i18nServer.getFixedT(request);
+  return json({ description: t("description") });
+}
+
 export default function Index() {
+  const { t } = useTranslation();
+  const { description } = useLoaderData<typeof loader>();
+
   return (
     <div>
-      <h1 className="text-3xl font-bold ">Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+      <h1 className="text-3xl font-bold ">{t("intro")}</h1>
+      <p>{description}</p>
     </div>
   );
 }
